@@ -24,7 +24,12 @@ plot3 <- function(inputdatafile) {
     colnames(mdat)[11]="day"
     
     # graphics device
-    png("plot3.png", width=480, height=480, units="px")
+    png("plot3.png", 
+        width=480, 
+        height=480, 
+        units="px", 
+        bg="transparent",
+        type="cairo")
     
     # build the main plot
     plot(mdat$Sub_metering_1,

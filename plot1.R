@@ -15,7 +15,12 @@ plot1 <- function(inputdatafile) {
     rm(household_power_consumption)
 
     # graphics device
-    png("plot1.png", width=480, height=480, units="px")
+    png("plot1.png", 
+        width=480, 
+        height=480, 
+        units="px", 
+        bg="transparent",
+        type="cairo")
     
     # generate the histogram
     hist(mdat$Global_active_power, 

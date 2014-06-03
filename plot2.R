@@ -24,7 +24,12 @@ plot2 <- function(inputdatafile) {
     colnames(mdat)[11]="day"
 
     # graphics device
-    png("plot2.png", width=480, height=480, units="px")
+    png("plot2.png", 
+        width=480, 
+        height=480, 
+        units="px", 
+        bg="transparent",
+        type="cairo")
     
     plot(mdat$Global_active_power, 
              main=NA, 

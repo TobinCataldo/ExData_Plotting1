@@ -25,9 +25,15 @@ plot4 <- function(inputdatafile) {
     
     
     # graphics device
-    png("plot4.png", width=480, height=480, units="px")
+    png("plot4.png", 
+        width=480, 
+        height=480, 
+        units="px", 
+        bg="transparent",
+        type="cairo")
     
     par(mfrow=c(2,2))
+     
     
     # we know a two days are in the data set
     # how many rows does Thursday have, I could assume half (1440)
@@ -51,7 +57,7 @@ plot4 <- function(inputdatafile) {
     # add the x axis labels
     axis(1, at=c(1,nuday+1,2880),labels=lab)
     
-     # draw the border
+     # draw the borderplot
     box(col="black")
     
     #############################
@@ -70,7 +76,7 @@ plot4 <- function(inputdatafile) {
     
     # draw the border
     box(col="black")
-    
+   
     #############################    
     # Plot 2,1
     

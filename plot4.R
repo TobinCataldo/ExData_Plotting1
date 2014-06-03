@@ -29,8 +29,8 @@ plot4 <- function(inputdatafile) {
         width=480, 
         height=480, 
         units="px", 
-        bg="transparent",
-        type="cairo")
+        bg="white",
+        type="cairo-png")
     
     par(mfrow=c(2,2))
      

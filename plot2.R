@@ -1,18 +1,12 @@
-plot2 <- function(inputdatafile) {
-    ## input parameter should be the location of the data file
-    ## no checking, just assuming the passed data file is the unzipped
-    ## txt file from the assignment household_power_consumption.txt
+plot2 <- function(printToScreen=F, useExistingFile=T,useExistingVar=T) {
     
-    # read the entire csv
-    household_power_consumption <- read.csv(inputdatafile, 
-                                            na.strings=c("?"),  
-                                            sep=";")
+    # processes input for project data.
+    # creates a global env variable called :
+    # household_power_consumption
+    getProject1Data(useExistingFile,useExistingVar)
     
     # subset the the large file
     mdat<-subset(household_power_consumption, Date=="1/2/2007" | Date=="2/2/2007")    
-    
-    #drop the original (should make for quicker analysis)
-    rm(household_power_consumption)
     
     # add DateTime column and a factorable Day column
     mdat <-cbind(mdat, strptime(c(paste(mdat$Date, mdat$Time, 
@@ -23,13 +17,18 @@ plot2 <- function(inputdatafile) {
     mdat <- cbind(mdat, format(mdat$dt, "%a"))
     colnames(mdat)[11]="day"
 
-    # graphics device
-    png("plot2.png", 
-        width=480, 
-        height=480, 
-        units="px", 
-        bg="white",
-        type="cairo-png")
+    op <- par()
+    par(family="serif", cex=.75)
+    
+    if (!printToScreen) {
+        # graphics device
+        png("plot2.png", 
+            width=480, 
+            height=480, 
+            units="px", 
+            bg="white",
+            type="cairo-png")
+    }
     
     plot(mdat$Global_active_power, 
              main=NA, 
@@ -37,7 +36,7 @@ plot2 <- function(inputdatafile) {
              col="black", 
              type="l", 
              xlab=NA, 
-             xaxt='n')
+             xaxt="n")
     
     # we know a two days are in the data set
     # how many rows does Thursday have, I could assume half (1440)
@@ -50,12 +49,10 @@ plot2 <- function(inputdatafile) {
     # draw the border
     box(col="black")
     
-    # finish writing
-    val <- dev.off()
+    if (!printToScreen) {
+        # finish writing
+        val <- dev.off()
+    }
     
-}
-
-plot2Local <- function() {
- ## this one is for me
- plot2("C:/Users/tcataldo/Work/build/R/coursera/ExploratoryDataAnalysis/household_power_consumption.txt")
+    par<-op
 }

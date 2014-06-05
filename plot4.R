@@ -1,18 +1,13 @@
-plot4 <- function(inputdatafile) {
-    ## input parameter should be the location of the data file
-    ## no checking, just assuming the passed data file is the unzipped
-    ## txt file from the assignment household_power_consumption.txt
+plot4 <- function(printToScreen=F, useExistingFile=T,useExistingVar=T) {
     
-    # read the entire csv
-    household_power_consumption <- read.csv(inputdatafile, 
-                                            na.strings=c("?"),  
-                                            sep=";")
+    # processes input for project data.
+    # creates a global env variable called :
+    # household_power_consumption
+    getProject1Data(useExistingFile,useExistingVar)
     
     # subset the the large file
     mdat<-subset(household_power_consumption, Date=="1/2/2007" | Date=="2/2/2007")    
-    
-    #drop the original (should make for quicker analysis)
-    rm(household_power_consumption)
+ 
     
     # add DateTime column and a factorable Day column
     mdat <-cbind(mdat, strptime(c(paste(mdat$Date, mdat$Time, 
@@ -23,17 +18,19 @@ plot4 <- function(inputdatafile) {
     mdat <- cbind(mdat, format(mdat$dt, "%a"))
     colnames(mdat)[11]="day"
     
+    if (!printToScreen) {
+        # graphics device
+        png("plot4.png", 
+            width=480, 
+            height=480, 
+            units="px", 
+            bg="white",
+            type="cairo-png")
+    }
     
-    # graphics device
-    png("plot4.png", 
-        width=480, 
-        height=480, 
-        units="px", 
-        bg="white",
-        type="cairo-png")
-    
+    op <- par()
     par(mfrow=c(2,2))
-     
+    par(family="serif", cex=.8)  
     
     # we know a two days are in the data set
     # how many rows does Thursday have, I could assume half (1440)
@@ -103,7 +100,7 @@ plot4 <- function(inputdatafile) {
     legend("topright", 
            c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), 
            lty=c(1,1,1), 
-           col=c("black","blue","red"), bty="n")
+           col=c("black","red","blue"), bty="n")
     
     ##########################
     # Plot 2,2
@@ -122,14 +119,12 @@ plot4 <- function(inputdatafile) {
     # draw the border
     box(col="black")
     
+    if (!printToScreen) {
+        # finish writing
+        val <- dev.off()
+    }
     
-    # finish writing
-    val <- dev.off()
-    
+    par<-op
  
 }
 
-plot4Local <- function() {
-    ## this one is for me
-    plot4("C:/Users/tcataldo/Work/build/R/coursera/ExploratoryDataAnalysis/household_power_consumption.txt")
-}

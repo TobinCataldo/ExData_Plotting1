@@ -39,20 +39,22 @@ plot5 <- function(printToScreen=F, useExistingFile=T,useExistingVar=T) {
     # just want the EI.Sector
     trimmed <- merge(trimmed, motorVehicle, by.x = "SCC", by.y = "SCC")
     aggdata <- aggregate(trimmed$Emissions, by=list(trimmed$fips, trimmed$EI.Sector, trimmed$year), FUN=sum)
-  
+    aggdata[1] <- as.factor(aggdata[[1]])
+    aggdata[2] <- as.factor(aggdata[[2]])
+    aggdata[3] <- as.factor(aggdata[[3]])
+    
     # local variables in AES fail
     # http://stackoverflow.com/questions/10659133/local-variables-within-aes    
     .e <- environment()
     mainplot <- ggplot(data=aggdata, 
-                 aes(x=factor(aggdata[[3]]),          # X axis data, factors become tick marks
-                     y=round(aggdata[[4]],2),         # scaled Y axis data
-                     label=round(aggdata[[4]],2),
-                     color=aggdata[[2]]
+                 aes(x=Group.3,
+                     y=x,                               
+                     color=Group.2
                  ),
-                 environment =.e) +  # adds point value to graph
+                 environment =.e) +  
       
         geom_point() +     
-        geom_line(size=.5, aes(group=aggdata[[2]])) +          # connect the points
+        geom_line(size=.5, aes(group=Group.2)) +          # connect the points
         #geom_text(size=3, hjust = 1, vjust = 1.25) +     # writes the labels    
         ylab("PM2.5 Emissions") + 
         xlab("Year") + 
@@ -67,21 +69,16 @@ plot5 <- function(printToScreen=F, useExistingFile=T,useExistingVar=T) {
         theme(axis.text = element_text(size=8)) 
         #stat_summary(aes(group=factor(aggdata[[1]]),label="sum"), fun.y=sum, geom="line", linetype="dotted", size=1.3, alpha=.23, color="black") 
     
-    
+        #build the subplot from the same data
         subplot <- ggplot(data=aggdata, 
-                          aes(x=factor(aggdata[[3]]),          # X axis data, factors become tick marks
-                              y=round(aggdata[[4]],2),         # scaled Y axis data
-                              label=round(aggdata[[4]],2)
-                              ),
-                              
-                              environment =.e) +  # adds point value to graph
-        
+                          aes(x=Group.3,
+                              y=x),                              
+                              environment =.e) +     
         ylab("") + 
         xlab("") + 
         ggtitle("Total Motor Vehicle Emissions\nBaltimore City, Maryland") +       
         theme(plot.title = element_text(size=8, face="bold")) +
- 
-        theme(panel.background = element_rect(fill = "transparent", 
+         theme(panel.background = element_rect(fill = "transparent", 
                                               color = "transparent", 
                                               size=0)) +
         theme(panel.grid.minor = element_blank()) +
@@ -92,7 +89,7 @@ plot5 <- function(printToScreen=F, useExistingFile=T,useExistingVar=T) {
 
         theme(axis.title = element_text(size=7)) +
         theme(axis.text = element_text(size=7)) +
-        stat_summary(aes(group=factor(aggdata[[1]]),label="sum"), fun.y=sum, geom="line", linetype="dotted", size=1.1, alpha=1, color="black") 
+        stat_summary(aes(group=Group.1,label="sum"), fun.y=sum, geom="line", linetype="dotted", size=1.1, alpha=1, color="black") 
     
 
         vp <- viewport(width = 0.30, height = 0.35,

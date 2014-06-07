@@ -43,13 +43,14 @@ plot4 <- function(printToScreen=F, useExistingFile=T,useExistingVar=T) {
                        ),
                        environment =.e) +          
         geom_point() +     
-        geom_line(size=.5, aes(group=Group.1)) +          # connect the points
+        geom_line(size=.72, aes(group=Group.1)) +          # connect the points
         #geom_text(size=3, hjust = 1, vjust = 1.25) +     # writes the labels    
         ylab("PM2.5 Emission (parts per thousand)") + 
         xlab("Year") + 
         labs(color = "\n\n\n\n\n\n\n\n\n\n\n\n\nSource") +        
         ggtitle("PM2.5 Emission From Coal Combustion\nBy Source") +       
-        theme(plot.title = element_text(size=10, face="bold")) +
+        theme_bw() +
+        theme(plot.title = element_text(size=11, face="bold")) +
         theme(legend.position="right") + 
         theme(legend.direction="vertical") +
         theme(legend.title = element_text(size=9, face="bold")) +

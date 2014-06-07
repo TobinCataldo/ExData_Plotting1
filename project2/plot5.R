@@ -54,19 +54,22 @@ plot5 <- function(printToScreen=F, useExistingFile=T,useExistingVar=T) {
                  environment =.e) +  
       
         geom_point() +     
-        geom_line(size=.5, aes(group=Group.2)) +          # connect the points
+        geom_line(size=.72, aes(group=Group.2)) +          # connect the points
         #geom_text(size=3, hjust = 1, vjust = 1.25) +     # writes the labels    
         ylab("PM2.5 Emissions") + 
         xlab("Year") + 
-        labs(color = "\n\n\n\n\n\n\n\n\n\n\n\n\nSource Type") +        
+        labs(color = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSource Type") +        
         ggtitle("PM2.5 Emissions From Motor Vehicles By Source\nBaltimore City, Maryland") +       
-        theme(plot.title = element_text(size=10, face="bold")) +
+        theme_bw()+
+        theme(plot.title = element_text(size=11, face="bold")) +
         theme(legend.position="right") + 
         theme(legend.direction="vertical") +
         theme(legend.title = element_text(size=8, face="bold")) +
         theme(legend.text = element_text(size=9)) +
         theme(axis.title = element_text(size=9)) +
-        theme(axis.text = element_text(size=8)) 
+        theme(axis.text = element_text(size=8)) +
+        scale_color_manual(values=c("#999999","#FF3333", "#E69F00", "#F0E442", "#56B4E9", "#009E73",  "#0072B2", "#D55E00", "#CC79A7", "#006633")) 
+        
         #stat_summary(aes(group=factor(aggdata[[1]]),label="sum"), fun.y=sum, geom="line", linetype="dotted", size=1.3, alpha=.23, color="black") 
     
         #build the subplot from the same data
@@ -77,7 +80,7 @@ plot5 <- function(printToScreen=F, useExistingFile=T,useExistingVar=T) {
         ylab("") + 
         xlab("") + 
         ggtitle("Total Motor Vehicle Emissions\nBaltimore City, Maryland") +       
-        theme(plot.title = element_text(size=8, face="bold")) +
+        theme(plot.title = element_text(size=9, face="bold")) +
          theme(panel.background = element_rect(fill = "transparent", 
                                               color = "transparent", 
                                               size=0)) +
@@ -87,13 +90,13 @@ plot5 <- function(printToScreen=F, useExistingFile=T,useExistingVar=T) {
                                              color = "transparent", 
                                              size=0)) +
 
-        theme(axis.title = element_text(size=7)) +
-        theme(axis.text = element_text(size=7)) +
-        stat_summary(aes(group=Group.1,label="sum"), fun.y=sum, geom="line", linetype="dotted", size=1.1, alpha=1, color="black") 
+        theme(axis.title = element_text(size=8)) +
+        theme(axis.text = element_text(size=8)) +
+        stat_summary(aes(group=Group.1), fun.y=sum, geom="line", linetype="solid", size=.8, alpha=1, color="black") 
     
 
-        vp <- viewport(width = 0.30, height = 0.35,
-                       x=.85, y=.60,  
+        vp <- viewport(width = 0.38, height = 0.38,
+                       x=.85, y=.54,  
                        just = c("right","bottom"))
 
 

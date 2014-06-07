@@ -41,7 +41,8 @@ plot3 <- function(printToScreen=F, useExistingFile=T,useExistingVar=T) {
         xlab("Year") + 
         labs(color = "Source Type") +        
         ggtitle("PM2.5 Emissions By Year and Type for Baltimore City, Maryland") +       
-        theme(plot.title = element_text(size=10, face="bold")) +
+        theme_bw() +
+        theme(plot.title = element_text(size=11, face="bold")) +
         theme(legend.position=c(.88,.84)) +    
         theme(legend.title = element_text(size=8, face="bold")) +
         theme(legend.text = element_text(size=8)) +
